@@ -38,10 +38,10 @@ export class AuthService {
    * 校验口令并签发会话 JWT。口令不落库。
    */
   async passwordLogin(dto: PasswordLoginDto) {
-    const adminMail = process.env.ADMIN_LOGIN_MAIL?.trim() || 'admin@aitoearn.local'
-    const tokenTtl = process.env.ADMIN_LOGIN_TOKEN_TTL?.trim() || '7d'
+    const adminMail = process.env['ADMIN_LOGIN_MAIL']?.trim() || 'admin@aitoearn.local'
+    const tokenTtl = process.env['ADMIN_LOGIN_TOKEN_TTL']?.trim() || '7d'
     const jwtSecret = config.auth.secret
-    const password = process.env.ADMIN_LOGIN_PASSWORD?.trim()
+    const password = process.env['ADMIN_LOGIN_PASSWORD']?.trim()
 
     if (!password) {
       this.logger.error('ADMIN_LOGIN_PASSWORD is not set; password login is disabled')
@@ -65,7 +65,7 @@ export class AuthService {
     const token = jwt.sign(
       { id: user.id, mail: user.mail, name: user.name },
       jwtSecret,
-      { expiresIn: tokenTtl },
+      { expiresIn: tokenTtl as jwt.SignOptions['expiresIn'] },
     )
 
     return { token, userInfo: user }
