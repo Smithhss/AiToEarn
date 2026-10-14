@@ -7,6 +7,7 @@
 
 import { Loader2 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import type { FormEvent } from 'react'
 import { useState } from 'react'
 
 import { passwordLoginApi } from '@/api/auth/auth.api'
@@ -27,7 +28,7 @@ export function PasswordLoginForm() {
   const [password, setPassword] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!password) {
       toast.error(t('passwordRequired'))
