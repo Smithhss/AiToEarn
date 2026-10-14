@@ -2,7 +2,7 @@ import { Injectable, Logger, UnauthorizedException } from '@nestjs/common'
 import { UserRepository, UserStatus } from '@yikart/mongodb'
 import { timingSafeEqual } from 'node:crypto'
 import jwt from 'jsonwebtoken'
-import { config } from '../../config'
+import { getJwtSecret } from '../../config'
 import { PasswordLoginDto } from './auth.dto'
 
 /**
@@ -40,7 +40,7 @@ export class AuthService {
   async passwordLogin(dto: PasswordLoginDto) {
     const adminMail = process.env['ADMIN_LOGIN_MAIL']?.trim() || 'admin@aitoearn.local'
     const tokenTtl = process.env['ADMIN_LOGIN_TOKEN_TTL']?.trim() || '7d'
-    const jwtSecret = config.auth.secret
+    const jwtSecret = getJwtSecret()
     const password = process.env['ADMIN_LOGIN_PASSWORD']?.trim()
 
     if (!password) {

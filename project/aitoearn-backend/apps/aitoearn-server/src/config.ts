@@ -72,3 +72,12 @@ export const appConfigSchema = z.object({
 export class AppConfig extends createZodDto(appConfigSchema) { }
 
 export const config = selectConfig(AppConfig)
+
+/**
+ * JWT 签名密钥。允许用环境变量 AUTH_JWT_SECRET 覆盖 config.yaml 的 auth.secret：
+ * config.yaml 受版本控制，直接改它会在下次 git 拉取时被重置，导致密钥轮换失效。
+ * 鉴权守卫与登录签发必须使用同一个值，故统一从这里取。
+ */
+export function getJwtSecret(): string {
+  return process.env['AUTH_JWT_SECRET']?.trim() || config.auth.secret
+}

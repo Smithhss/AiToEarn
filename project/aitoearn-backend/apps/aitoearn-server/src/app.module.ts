@@ -10,7 +10,7 @@ import { ConfigEditorModule } from '@yikart/config-editor'
 import { ApiKeyRepository, MongodbModule, UserRepository, UserStatus } from '@yikart/mongodb'
 import { RedlockModule } from '@yikart/redlock'
 import { ServerRedisModule } from './common/redis'
-import { AppConfig, config } from './config'
+import { AppConfig, config, getJwtSecret } from './config'
 import { ApiKeyModule } from './core/api-key/api-key.module'
 import { AssetsModule } from './core/assets/assets.module'
 import { AuthModule } from './core/auth/auth.module'
@@ -51,6 +51,7 @@ import { UserModule } from './core/user/user.module'
         }
         return {
           ...config.auth,
+          secret: getJwtSecret(),
           getTokenInfo: (payload: TokenPayload) => getOpenUser(payload.id),
           getTokenInfoByApiKey: async (apiKey: string) => {
             const keyHash = createHash('sha1').update(apiKey).digest('hex')
