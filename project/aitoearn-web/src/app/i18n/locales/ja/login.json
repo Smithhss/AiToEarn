@@ -32,5 +32,7 @@
   "termsOfService": "利用規約",
   "and": "および",
   "privacyPolicy": "プライバシーポリシー",
-  "newUserPromotion": "新規ユーザーは14日間無料でご利用いただけます！"
+  "newUserPromotion": "新規ユーザーは14日間無料でご利用いただけます！",
+  "passwordPlaceholder": "管理者パスワードを入力",
+  "passwordRequired": "パスワードを入力してください"
 }

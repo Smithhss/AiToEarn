@@ -84,9 +84,7 @@ services:
     working_dir: /app
     environment:
       MONGO_URI: mongodb://admin:password@mongodb:27017
-      JWT_SECRET: change-this-jwt-secret
       DB_NAME: aitoearn
-      AUTO_LOGIN_TOKEN_PATH: /data/init/token.txt
     entrypoint: /bin/sh -c "npm install --omit=dev 2>/dev/null && node init.mjs"
     networks:
       - aitoearn-network
@@ -146,6 +144,9 @@ services:
         condition: service_healthy
     volumes:
       - ./project/aitoearn-backend/apps/aitoearn-server/config/config.yaml:/app/config.yaml:rw
+    environment:
+      # 单管理员登录口令，取自同目录 .env（不写入仓库）
+      ADMIN_LOGIN_PASSWORD: ${ADMIN_LOGIN_PASSWORD:?ADMIN_LOGIN_PASSWORD must be set in .env}
     networks:
       - aitoearn-network
     healthcheck:
@@ -163,13 +164,8 @@ services:
     depends_on:
       aitoearn-server:
         condition: service_healthy
-      aitoearn-init:
-        condition: service_completed_successfully
-    volumes:
-      - init-data:/data/init:ro
     networks:
       - aitoearn-network
-    command: ["/bin/sh", "-c", "AUTO_LOGIN_TOKEN=$$(cat /data/init/token.txt 2>/dev/null || true); if [ -z \"$$AUTO_LOGIN_TOKEN\" ]; then echo 'AUTO_LOGIN_TOKEN is missing. Check the aitoearn-init container logs.' >&2; exit 1; fi; export AUTO_LOGIN_TOKEN; exec node server.js"]
     environment:
       NODE_ENV: production
       NEXT_TELEMETRY_DISABLED: 1

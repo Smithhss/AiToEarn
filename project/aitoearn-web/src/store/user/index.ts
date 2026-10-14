@@ -83,10 +83,7 @@ export const useUserStore = createPersistStore(
       setUserInfo(userInfo: UserInfo) {
         set({ userInfo })
       },
-      appInit(autoLoginToken?: string) {
-        if (!_get().token && autoLoginToken) {
-          methods.setToken(autoLoginToken)
-        }
+      appInit() {
         methods.getUserInfo()
         useAccountStore.getState().accountInit()
       },

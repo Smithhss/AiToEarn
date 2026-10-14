@@ -13,6 +13,7 @@ import { ServerRedisModule } from './common/redis'
 import { AppConfig, config } from './config'
 import { ApiKeyModule } from './core/api-key/api-key.module'
 import { AssetsModule } from './core/assets/assets.module'
+import { AuthModule } from './core/auth/auth.module'
 import { ChannelsModule } from './core/channels/channels.module'
 import { ChannelsMcpModule } from './core/channels/mcp/channels.mcp.module'
 import { RelayModule } from './core/channels/relay/relay.module'
@@ -67,6 +68,7 @@ import { UserModule } from './core/user/user.module'
     AitoearnAiClientModule.forRoot(config.aiClient),
     AssetsModule,
     UserModule,
+    AuthModule,
     ContentModule,
     ChannelsModule,
     PublishModule,

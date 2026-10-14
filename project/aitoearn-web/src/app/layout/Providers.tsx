@@ -33,11 +33,9 @@ export function usePublicRoute() {
 export function Providers({
   children,
   lng,
-  autoLoginToken,
 }: {
   children: React.ReactNode
   lng: string
-  autoLoginToken?: string
 }) {
   const pathname = usePathname()
   const publicRoute = isPublicPage(pathname)
@@ -67,9 +65,9 @@ export function Providers({
       return
     }
 
-    useUserStore.getState().appInit(autoLoginToken)
+    useUserStore.getState().appInit()
     setAuthInitialized(true)
-  }, [_hasHydrated, autoLoginToken])
+  }, [_hasHydrated])
 
   useEffect(() => {
     useUserStore.getState().setLang(lng)

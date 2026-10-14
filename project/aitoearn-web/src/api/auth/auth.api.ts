@@ -13,6 +13,11 @@ export function emailCodeLoginApi(data: EmailCodeLoginParams) {
   return http.post<CodeLoginResponse>('login/mail/verify', data)
 }
 
+/** 单管理员口令登录（自托管部署使用） */
+export function passwordLoginApi(data: PasswordLoginParams) {
+  return http.post<CodeLoginResponse>('login/password', data)
+}
+
 /** 发送手机验证码 */
 export function sendPhoneCodeApi(data: SendPhoneCodeParams) {
   return http.post<null>('login/phone', data)

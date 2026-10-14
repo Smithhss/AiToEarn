@@ -23,6 +23,13 @@ export class UserRepository extends BaseRepository<User> {
     return userInfo as LeanDoc<User> | null
   }
 
+  /**
+   * 按邮箱查找用户（用于口令登录）
+   */
+  async findByMail(mail: string): Promise<LeanDoc<User> | null> {
+    return this.findOne({ mail, isDelete: { $ne: true } })
+  }
+
   async updateAiConfigById(userId: string, aiConfig: Partial<UserAiInfo>): Promise<boolean> {
     const res = await this.model.updateOne(
       { _id: userId },

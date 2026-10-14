@@ -54,7 +54,6 @@ export default async function RootLayout({
   params: Promise<{ lng: string }>
 }>) {
   const { lng } = await params
-  const autoLoginToken = process.env.AUTO_LOGIN_TOKEN?.trim() || undefined
 
   return (
     <html lang={lng} dir={dir(lng)} suppressHydrationWarning>
@@ -79,7 +78,7 @@ export default async function RootLayout({
           }}
         />
         <Script src="https://r.wdfl.co/rw.js" data-rewardful="ded70f" strategy="afterInteractive" />
-        <Providers lng={lng} autoLoginToken={autoLoginToken}>
+        <Providers lng={lng}>
           {/* 全局频道管理弹框 */}
           <ChannelManager />
           <p className="hidden">Impact-Site-Verification: f9836212-462a-482f-9232-8a877970eacf</p>

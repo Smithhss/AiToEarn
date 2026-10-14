@@ -34,6 +34,13 @@ export interface PhoneCodeLoginParams {
 }
 
 /**
+ * PasswordLoginParams 请求参数（自托管单管理员口令登录）。
+ */
+export interface PasswordLoginParams {
+  password: string
+}
+
+/**
  * CodeLoginResponse 响应数据。
  */
 export interface CodeLoginResponse {

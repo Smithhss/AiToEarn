@@ -1,18 +1,14 @@
 /**
- * 初始化脚本 - 创建默认用户并生成自动登录 token
+ * 初始化脚本 - 仅创建默认管理员用户
  * 通过 docker-compose aitoearn-init 服务运行
+ * 自托管部署使用口令登录，不再生成自动登录 token。
  */
 
 import { MongoClient } from 'mongodb'
-import jwt from 'jsonwebtoken'
-import { writeFileSync, mkdirSync } from 'fs'
-import { dirname } from 'path'
 import crypto from 'crypto'
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://admin:password@mongodb:27017'
-const JWT_SECRET = process.env.JWT_SECRET || 'change-this-jwt-secret'
 const DB_NAME = process.env.DB_NAME || 'aitoearn'
-const TOKEN_PATH = process.env.AUTO_LOGIN_TOKEN_PATH || '/data/init/token.txt'
 const DEFAULT_EMAIL = 'admin@aitoearn.local'
 
 async function main() {
@@ -68,15 +64,9 @@ async function main() {
     console.log(`Found existing user: ${DEFAULT_EMAIL}`)
   }
 
-  const token = jwt.sign(
-    { id: user._id.toString(), mail: user.mail, name: user.name },
-    JWT_SECRET,
-    { expiresIn: '100y' },
-  )
-
-  mkdirSync(dirname(TOKEN_PATH), { recursive: true })
-  writeFileSync(TOKEN_PATH, token)
-  console.log(`Token written to ${TOKEN_PATH}`)
+  // 自托管部署使用「口令登录」，不再签发长期自动登录 token。
+  // 管理员身份由 aitoearn-server 的 /login/password 接口校验口令后签发短期 JWT。
+  console.log('Auto-login token generation disabled.')
 
   await client.close()
 }

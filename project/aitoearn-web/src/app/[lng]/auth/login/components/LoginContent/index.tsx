@@ -15,7 +15,7 @@ import { useTransClient } from '@/app/i18n/client'
 import logo from '@/assets/images/logo.png'
 import { useUserStore } from '@/store/user'
 
-import { EmailLoginForm } from './EmailLoginForm'
+import { PasswordLoginForm } from './PasswordLoginForm'
 
 const fadeInUp = {
   initial: { opacity: 0, y: 10 },
@@ -89,8 +89,8 @@ export default function LoginContent() {
             <p className="mt-2 text-muted-foreground">{t('loginSubtitle')}</p>
           </div>
 
-          {/* 登录表单 */}
-          <EmailLoginForm />
+          {/* 登录表单：自托管部署使用单管理员口令登录 */}
+          <PasswordLoginForm />
         </motion.div>
 
         {/* 底部条款 */}

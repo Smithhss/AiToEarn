@@ -32,5 +32,7 @@
   "termsOfService": "Terms of Service",
   "and": "and",
   "privacyPolicy": "Privacy Policy",
-  "newUserPromotion": "New users get 14 days free membership!"
+  "newUserPromotion": "New users get 14 days free membership!",
+  "passwordPlaceholder": "Enter admin password",
+  "passwordRequired": "Please enter password"
 }
