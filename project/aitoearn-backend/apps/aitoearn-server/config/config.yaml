@@ -41,7 +41,7 @@ assets:
   cdnEndpoint: https://aitoearn.aicos.ink/oss
   signExpires: 300
   forcePathStyle: true
-  publicEndpoint: https://aitoearn.aicos.ink/oss
+  publicEndpoint: https://aitoearn.aicos.ink
   provider: s3
 aiClient:
   baseUrl: http://aitoearn-ai:3010
