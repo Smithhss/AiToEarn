@@ -217,3 +217,19 @@ export const appConfigSchema = z.object({
 export class AppConfig extends createZodDto(appConfigSchema) { }
 
 export const config = selectConfig(AppConfig)
+
+/**
+ * 允许用环境变量覆盖 provider 密钥。
+ *
+ * config.yaml 受版本控制，在上面填写密钥会在下次 git 拉取时被还原，
+ * 导致已配置的密钥丢失。部署时把密钥放进 .env，由 compose 注入这些变量。
+ */
+const envOpenaiKey = process.env['AI_OPENAI_API_KEY']?.trim()
+if (envOpenaiKey) {
+  config.ai.openai.apiKey = envOpenaiKey
+}
+
+const envOpenaiBaseUrl = process.env['AI_OPENAI_BASE_URL']?.trim()
+if (envOpenaiBaseUrl) {
+  config.ai.openai.baseUrl = envOpenaiBaseUrl
+}
