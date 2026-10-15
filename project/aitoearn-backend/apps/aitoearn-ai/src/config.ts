@@ -219,6 +219,17 @@ export class AppConfig extends createZodDto(appConfigSchema) { }
 export const config = selectConfig(AppConfig)
 
 /**
+ * JWT 签名密钥。允许用环境变量 AUTH_JWT_SECRET 覆盖 config.yaml 的 auth.secret。
+ *
+ * config.yaml 受版本控制，直接改它会在下次 git 拉取时被还原，导致密钥轮换失效。
+ * server 与 ai 两个服务必须使用同一个值，否则会出现「签发方能签、校验方不认」
+ * 的 invalid signature。
+ */
+export function getJwtSecret(): string {
+  return process.env['AUTH_JWT_SECRET']?.trim() || config.auth.secret
+}
+
+/**
  * 允许用环境变量覆盖 provider 密钥。
  *
  * config.yaml 受版本控制，在上面填写密钥会在下次 git 拉取时被还原，

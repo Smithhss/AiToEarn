@@ -126,6 +126,8 @@ services:
       # 留空则回退到 config.yaml 里的值
       AI_OPENAI_API_KEY: ${AI_OPENAI_API_KEY:-}
       AI_OPENAI_BASE_URL: ${AI_OPENAI_BASE_URL:-}
+      # 与 aitoearn-server 保持同一签名密钥，否则跨服务校验会 invalid signature
+      AUTH_JWT_SECRET: ${AUTH_JWT_SECRET:-}
     networks:
       - aitoearn-network
     healthcheck:
