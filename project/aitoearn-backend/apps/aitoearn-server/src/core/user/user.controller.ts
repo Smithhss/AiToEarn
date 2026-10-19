@@ -33,6 +33,19 @@ export class UserController {
     return this.userService.getUserInfoById(token.id)
   }
 
+  /**
+   * 积分余额。浏览器插件通过 /user/credits 读取，用于 Agent 功能的余额校验。
+   * 自托管版本没有官方积分体系，这里直接返回 score 字段。
+   */
+  @ApiDoc({
+    summary: 'Get Credits Balance',
+    description: 'Return the authenticated user credits balance (score field).',
+  })
+  @Get('credits')
+  getCredits(@GetToken() token: TokenInfo) {
+    return this.userService.getCredits(token.id)
+  }
+
   @ApiDoc({
     summary: 'Update User Information',
     description: 'Update the profile of the authenticated user.',

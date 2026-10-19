@@ -157,6 +157,13 @@ export class User extends WithTimestampSchema {
 
   @Prop({ type: String, required: false, default: 'en-US' })
   locale?: string // 用户语言偏好 (en-US | zh-CN)
+
+  /**
+   * 积分余额（由浏览器插件读取，对应 /user/credits 返回的 balance）。
+   * 自托管版本没有官方积分体系，这里用该字段承载插件的余额校验。
+   */
+  @Prop({ required: false, default: 0, type: Number })
+  score?: number
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

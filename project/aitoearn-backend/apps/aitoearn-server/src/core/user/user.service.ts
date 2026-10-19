@@ -24,6 +24,18 @@ export class UserService {
   }
 
   /**
+   * 返回用户积分余额。
+   * 供浏览器插件调用（GET /user/credits），字段名与官方 SaaS 保持一致。
+   */
+  async getCredits(id: string): Promise<{ balance: number }> {
+    const user = await this.userRepository.getById(id)
+    if (!user)
+      throw new AppException(ResponseCode.UserNotFound)
+
+    return { balance: Number(user.score ?? 0) }
+  }
+
+  /**
    * Update user information
    * @param id
    * @param newdData
